@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pizza que Rende — Área do Aluno | Cursos &amp; Renda Brasil</title>
+  <style>
+    :root {
+      --bg: #fffaf5;
+      --surface: #ffffff;
+      --surface-alt: #fdf2e9;
+      --ink: #231712;
+      --muted: #695349;
+      --primary: #b91c1c;
+      --primary-dark: #8f1414;
+      --accent: #d97706;
+      --accent-soft: #fef3c7;
+      --success: #15803d;
+      --success-soft: #dcfce7;
+      --border: #ead8cb;
+      --shadow: 0 10px 28px rgba(35, 23, 18, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    header.hero {
+      background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 55%, #c2410c 100%);
+      color: #ffffff;
+      padding: 28px 18px 34px;
+      box-shadow: var(--shadow);
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .brand-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .brand-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .price-pill {
+      background: #fef08a;
+      color: #451a03;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.65rem, 4vw, 2.35rem);
+      line-height: 1.18;
+      font-weight: 800;
+    }
+
+    .hero-sub {
+      margin: 0 0 18px;
+      font-size: 1rem;
+      color: #ffedd5;
+      max-width: 760px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .kpi {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .kpi strong {
+      display: block;
+      font-size: 1.15rem;
+      color: #fde68a;
+    }
+
+    .kpi span {
+      font-size: 0.82rem;
+      color: #fff7ed;
+    }
+
+    nav.tabs-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 250, 245, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 18px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      padding-bottom: 2px;
+    }
+
+    .tab-btn {
+      flex: 0 0 auto;
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--ink);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    main {
+      padding: 22px 18px 48px;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(35, 23, 18, 0.04);
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 1.3rem;
+      color: var(--primary-dark);
+    }
+
+    .card h3 {
+      margin: 16px 0 6px;
+      font-size: 1.05rem;
+      color: var(--ink);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .mini-box {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: #92400e;
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+
+    ul.clean-list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    ul.clean-list li {
+      margin-bottom: 6px;
+    }
+
+    .alert {
+      background: #fef2f2;
+      border-left: 4px solid var(--primary);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 12px;
+      font-size: 0.92rem;
+    }
+
+    .alert.ok {
+      background: var(--success-soft);
+      border-left-color: var(--success);
+      color: #14532d;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 560px;
+      background: var(--surface);
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: var(--surface-alt);
+      color: var(--primary-dark);
+      font-weight: 800;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 12px;
+      background: #f3e6dc;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 10px 0 14px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.25s ease;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      background: #fffdfb;
+      cursor: pointer;
+    }
+
+    .check-item input {
+      margin-top: 3px;
+      accent-color: var(--primary);
+      width: 17px;
+      height: 17px;
+      cursor: pointer;
+    }
+
+    .check-item.done span {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      padding: 10px 12px;
+      border: 1px solid #d5beae;
+      border-radius: 10px;
+      font-size: 0.94rem;
+      background: #ffffff;
+      color: var(--ink);
+    }
+
+    input[type="text"] {
+      flex: 1 1 220px;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn.secondary {
+      background: var(--surface-alt);
+      color: var(--ink);
+      border: 1px solid var(--border);
+    }
+
+    .btn.secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .filter-pill {
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .filter-pill.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .flavor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .flavor-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 12px;
+      background: #ffffff;
+    }
+
+    .flavor-card small {
+      display: inline-block;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-bottom: 5px;
+    }
+
+    .cat-classica { background: #fee2e2; color: #991b1b; }
+    .cat-especial { background: #fef3c7; color: #92400e; }
+    .cat-doce { background: #fce7f3; color: #9d174d; }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--muted);
+    }
+
+    .field input, .field select {
+      width: 100%;
+    }
+
+    .result-box {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .res-card {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .res-card span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .res-card strong {
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+    }
+
+    .copy-box {
+      background: #fdf8f4;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .copy-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    pre.script-text {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin: 0;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #ffffff;
+      border: 1px solid #efe2d8;
+      padding: 12px;
+      border-radius: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px 16px 32px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      background: #fffdfb;
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <div class="brand-row">
+        <span class="brand-tag">🍕 CURSOS &amp; RENDA BRASIL</span>
+        <span class="price-pill">Acesso Completo • R$ 9,90</span>
+      </div>
+      <h1>Pizza que Rende — Pizzas e Mini Pizzas do Zero ao Delivery</h1>
+      <p class="hero-sub">
+        Área do Aluno Interativa com os 6 módulos completos, plano de 3 dias até a primeira venda, checklist de compras,
+        gramaturas para 3 tamanhos, catálogo de 45 sabores, calculadora de custos/taxas e roteiros de divulgação.
+      </p>
+      <div class="kpi-grid">
+        <div class="kpi"><strong>3 Tamanhos</strong><span>Mini 5–6 cm, Brotinho e Tradicional</span></div>
+        <div class="kpi"><strong>45 Sabores</strong><span>15 Clássicos, 15 Especiais e 15 Doces</span></div>
+        <div class="kpi"><strong>6 Módulos</strong><span>Da massa e embalagem aos apps</span></div>
+        <div class="kpi"><strong>Embalar &amp; Vender</strong><span>Bandejas, selagem, validade e rotas</span></div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs-wrap">
+    <div class="container tabs" role="tablist">
+      <button class="tab-btn active" data-tab="inicio">Início &amp; Módulos</button>
+      <button class="tab-btn" data-tab="checklist">Checklist &amp; Plano 3 Dias</button>
+      <button class="tab-btn" data-tab="producao">Massas, Embalagem &amp; Gramaturas</button>
+      <button class="tab-btn" data-tab="sabores">45 Sabores</button>
+      <button class="tab-btn" data-tab="calculadora">Custos, Apps &amp; Lucro</button>
+      <button class="tab-btn" data-tab="divulgacao">Combos &amp; Divulgação</button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- ABA 1: INÍCIO E MÓDULOS -->
+    <section id="inicio" class="panel active">
+      <div class="card">
+        <h2>Como aproveitar este painel no dia a dia</h2>
+        <p class="muted">
+          Você não precisa de forno industrial, batedeira profissional ou ponto comercial para começar. O segredo está em
+          trabalhar com <strong>padronização</strong>, <strong>produção em lote</strong> e <strong>controle de custo por porção</strong>.
+        </p>
+        <div class="grid-3">
+          <div class="mini-box">
+            <span class="badge">Tamanho 1</span>
+            <h3>Mini Pizza (5 a 6 cm)</h3>
+            <p class="muted">Ideal para kits de festa, bandejas (6, 12, 20 ou 30 un.), revenda embalada e lanches rápidos.</p>
+          </div>
+          <div class="mini-box">
+            <span class="badge">Tamanho 2</span>
+            <h3>Brotinho (15 a 18 cm)</h3>
+            <p class="muted">Excelente para pedidos individuais, combos solo/casal e entregas rápidas de dia ou noite.</p>
+          </div>
+          <div class="mini-box">
+            <span class="badge">Tamanho 3</span>
+            <h3>Tradicional (30 a 35 cm)</h3>
+            <p class="muted">Carro-chefe para famílias, fins de semana e combos maiores com alto ticket médio.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Mapa Completo dos 6 Módulos</h2>
+        <div class="grid-2">
+          <div class="mini-box">
+            <span class="badge">Módulo 1</span>
+            <h3>Começando do Zero Absoluto</h3>
+            <ul class="clean-list">
+              <li>Negócio de pizzas em casa e os 3 tamanhos estratégicos</li>
+              <li>Lista mínima de equipamentos, bancada e <em>mise en place</em> (PVPS)</li>
+              <li>Checklist completo de compras e plano de ação de 3 dias</li>
+            </ul>
+          </div>
+          <div class="mini-box">
+            <span class="badge">Módulo 2</span>
+            <h3>Massas, Molhos e Produção em Lote</h3>
+            <ul class="clean-list">
+              <li>Massa econômica adaptada ao forno doméstico e molho artesanal lucrativo</li>
+              <li>Técnica de pré-assamento em lote sem dourar ou ressecar</li>
+              <li>Congelamento e descongelamento seguro dos discos de massa</li>
+            </ul>
+          </div>
+          <div class="mini-box">
+            <span class="badge">Módulo 3</span>
+            <h3>Método Embalar e Vender</h3>
+            <ul class="clean-list">
+              <li>Montagem padronizada em bandejas e kits para entrega ou revenda</li>
+              <li>Selagem (a vácuo ou de bancada) e rotulagem com validade e aquecimento</li>
+              <li>Congelamento, descongelamento e reaquecimento do produto final</li>
+            </ul>
+          </div>
+          <div class="mini-box">
+            <span class="badge">Módulo 4</span>
+            <h3>Cardápio Campeão (45 Sabores)</h3>
+            <ul class="clean-list">
+              <li>Tabela de gramaturas padronizadas por tamanho</li>
+              <li>15 sabores clássicos, 15 especiais e 15 doces/sobremesas</li>
+              <li>Como montar um cardápio equilibrado sem excesso de estoque</li>
+            </ul>
+          </div>
+          <div class="mini-box">
+            <span class="badge">Módulo 5</span>
+            <h3>Custos, Precificação, Taxas e Segurança</h3>
+            <ul class="clean-list">
+              <li>Ficha técnica de custo real e margem por porção</li>
+              <li>Precificação para venda direta e ajuste para taxas de apps de delivery</li>
+              <li>Ponto de equilíbrio, temperaturas, higiene e prazos de validade</li>
+            </ul>
+          </div>
+          <div class="mini-box">
+            <span class="badge">Módulo 6</span>
+            <h3>Combos Lucrativos, Upsell e Divulgação</h3>
+            <ul class="clean-list">
+              <li>Combos, bebidas e mini pizzas doces para elevar o ticket médio</li>
+              <li>Boas práticas para vitrine nos aplicativos de entrega</li>
+              <li>Mensagens prontas para WhatsApp, Instagram e Facebook + fidelização</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA 2: CHECKLIST E PLANO 3 DIAS -->
+    <section id="checklist" class="panel">
+      <div class="card">
+        <h2>Plano de Ação de 3 Dias até a Primeira Venda</h2>
+        <div class="grid-3">
+          <div class="mini-box">
+            <span class="badge">Dia 1</span>
+            <h3>Preparo, Forno e Compras</h3>
+            <p class="muted">Teste a temperatura real do seu forno, faça o checklist de compras focando nos itens de maior giro e organize sua bancada.</p>
+          </div>
+          <div class="mini-box">
+            <span class="badge">Dia 2</span>
+            <h3>Massa, Molho e Embalagens</h3>
+            <p class="muted">Prepare a massa e o molho em lote, faça os testes de gramatura, monte amostras/kits e prepare etiquetas de validade e aquecimento.</p>
+          </div>
+          <div class="mini-box">
+            <span class="badge">Dia 3</span>
+            <h3>Vitrine, Oferta e Primeiras Vendas</h3>
+            <p class="muted">Defina seus preços com margem, publique nos grupos locais, WhatsApp e redes sociais e atenda com rapidez e capricho.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Checklist Interativo de Preparação &amp; Compras</h2>
+        <p class="muted">Marque os itens concluídos — seu progresso fica salvo automaticamente neste navegador.</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+          <strong id="progressText">0 de 0 concluídos (0%)</strong>
+          <button class="btn secondary" id="resetChecklistBtn" type="button">Limpar marcações</button>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div id="checklistContainer"></div>
+      </div>
+    </section>
+
+    <!-- ABA 3: MASSAS, EMBALAGEM E GRAMATURAS -->
+    <section id="producao" class="panel">
+      <div class="card">
+        <h2>Tabela de Gramaturas Padronizadas por Tamanho</h2>
+        <p class="muted">Use estes valores de referência para manter o padrão de qualidade e evitar estourar o custo do recheio.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tamanho</th>
+                <th>Diâmetro</th>
+                <th>Disco de Massa</th>
+                <th>Molho de Tomate</th>
+                <th>Queijo Base</th>
+                <th>Cobertura / Recheio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Mini Pizza</strong></td>
+                <td>5 a 6 cm</td>
+                <td>25 g – 35 g</td>
+                <td>10 g – 15 g</td>
+                <td>15 g – 20 g</td>
+                <td>15 g – 25 g</td>
+              </tr>
+              <tr>
+                <td><strong>Brotinho</strong></td>
+                <td>15 a 18 cm</td>
+                <td>110 g – 140 g</td>
+                <td>35 g – 45 g</td>
+                <td>60 g – 80 g</td>
+                <td>60 g – 90 g</td>
+              </tr>
+              <tr>
+                <td><strong>Tradicional</strong></td>
+                <td>30 a 35 cm</td>
+                <td>260 g – 320 g</td>
+                <td>70 g – 90 g</td>
+                <td>140 g – 180 g</td>
+                <td>140 g – 200 g</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Regras de Ouro: Produção em Lote, Embalar &amp; Vender</h2>
+        <div class="grid-2">
+          <div class="mini-box">
+            <span class="badge">Módulo 2 • Massas e Molhos</span>
+            <h3>Pré-assamento e Congelamento dos Discos</h3>
+            <ul class="clean-list">
+              <li>Asse o disco rapidamente apenas até firmar a estrutura, sem deixar torrar ou ressecar.</li>
+              <li><strong>Espere esfriar completamente</strong> antes de embalar ou empilhar — vapor preso cria umidade e deixa a massa borrachuda.</li>
+              <li>Para usar: descongele na geladeira ou leve direto ao forno bem aquecido conforme a espessura do disco.</li>
+            </ul>
+          </div>
+          <div class="mini-box">
+            <span class="badge">Módulo 3 • Método Embalar e Vender</span>
+            <h3>Selagem, Etiqueta e Aquecimento</h3>
+            <ul class="clean-list">
+              <li>Na selagem a vácuo ou de bancada, deixe margem limpa na borda para o lacre ficar firme e não vazar molho/recheio.</li>
+              <li>Toda embalagem deve informar: <strong>nome/sabor, quantidade, data de fabricação, validade e modo de aquecer</strong>.</li>
+              <li>Instrua o cliente sobre <strong>airfryer, forno e micro-ondas</strong> (sem ressecar bordas ou queimar queijos/coberturas doces).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="alert">
+          <strong>Segurança Alimentar:</strong> mantenha ingredientes frios/laticínios refrigerados na temperatura correta, aplique
+          <em>PVPS (Primeiro que Vence, Primeiro que Sai)</em> e higienize mãos, bancada e utensílios antes e durante o preparo.
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA 4: 45 SABORES -->
+    <section id="sabores" class="panel">
+      <div class="card">
+        <h2>Catálogo de 45 Sabores Padronizados</h2>
+        <p class="muted">Pesquise por nome ou filtre por categoria (15 clássicos, 15 especiais e 15 doces).</p>
+        <div class="controls-bar">
+          <input type="text" id="flavorSearch" placeholder="Buscar sabor (ex: calabresa, frango, brigadeiro...)" />
+          <button class="filter-pill active" data-cat="todos" type="button">Todos (45)</button>
+          <button class="filter-pill" data-cat="classica" type="button">Clássicas (15)</button>
+          <button class="filter-pill" data-cat="especial" type="button">Especiais (15)</button>
+          <button class="filter-pill" data-cat="doce" type="button">Doces (15)</button>
+        </div>
+        <div id="flavorGrid" class="flavor-grid"></div>
+      </div>
+    </section>
+
+    <!-- ABA 5: CALCULADORA DE CUSTOS, APPS E LUCRO -->
+    <section id="calculadora" class="panel">
+      <div class="card">
+        <h2>Calculadora de Custo, Taxas de Apps e Margem</h2>
+        <p class="muted">
+          Simule o custo total por unidade ou kit, compare o lucro líquido na <strong>venda direta</strong> versus
+          <strong>aplicativos de delivery</strong> e descubra o preço ideal de venda.
+        </p>
+        <div class="calc-grid">
+          <div class="field">
+            <label for="custoIngredientes">Custo de ingredientes (R$)</label>
+            <input type="number" id="custoIngredientes" value="6.50" step="0.10" min="0" />
+          </div>
+          <div class="field">
+            <label for="custoEmbalagem">Custo de embalagem + rótulo (R$)</label>
+            <input type="number" id="custoEmbalagem" value="1.50" step="0.10" min="0" />
+          </div>
+          <div class="field">
+            <label for="custoExtra">Gás/energia/desperdício por un. (R$)</label>
+            <input type="number" id="custoExtra" value="1.00" step="0.10" min="0" />
+          </div>
+          <div class="field">
+            <label for="precoVenda">Preço de venda no cardápio (R$)</label>
+            <input type="number" id="precoVenda" value="24.90" step="0.50" min="0" />
+          </div>
+          <div class="field">
+            <label for="taxaApp">Taxa / comissão do app (%)</label>
+            <input type="number" id="taxaApp" value="23" step="1" min="0" max="80" />
+          </div>
+          <div class="field">
+            <label for="margemDesejada">Margem líquida alvo (%)</label>
+            <input type="number" id="margemDesejada" value="35" step="1" min="0" max="85" />
+          </div>
+        </div>
+
+        <div class="result-box">
+          <div class="res-card">
+            <span>Custo Unitário Total</span>
+            <strong id="resCustoTotal">R$ 9,00</strong>
+          </div>
+          <div class="res-card">
+            <span>Lucro Líquido (Venda Direta)</span>
+            <strong id="resLucroDireto">R$ 15,90</strong>
+          </div>
+          <div class="res-card">
+            <span>Lucro Líquido (No App)</span>
+            <strong id="resLucroApp">R$ 10,17</strong>
+          </div>
+          <div class="res-card">
+            <span>Preço Sugerido (Venda Direta)</span>
+            <strong id="resPrecoDireto">R$ 13,85</strong>
+          </div>
+          <div class="res-card">
+            <span>Preço Sugerido (No App)</span>
+            <strong id="resPrecoApp">R$ 21,32</strong>
+          </div>
+        </div>
+        <div class="alert ok" id="calcInsight" style="margin-top:14px;"></div>
+      </div>
+    </section>
+
+    <!-- ABA 6: COMBOS E DIVULGAÇÃO -->
+    <section id="divulgacao" class="panel">
+      <div class="card">
+        <h2>Estratégias de Combos &amp; Mensagens Prontas</h2>
+        <p class="muted">
+          Combine <strong>Mini Pizzas</strong>, <strong>Brotinhos</strong> e <strong>Tradicionais</strong> com bebidas e mini pizzas doces
+          para aumentar o ticket médio. Clique em <strong>Copiar</strong> para usar no WhatsApp, grupos ou redes sociais.
+        </p>
+
+        <div class="copy-box">
+          <div class="copy-header">
+            <strong>1. Mensagem para WhatsApp e Vizinhança (Pronta Entrega / Encomenda)</strong>
+            <button class="btn" data-copy="msg1" type="button">Copiar</button>
+          </div>
+          <pre class="script-text" id="msg1">🍕 Passando para avisar que estamos aceitando encomendas de pizzas artesanais fresquinhas e super caprichadas!
+
+Temos opções nos 3 tamanhos:
+• Mini Pizzas (5–6 cm) em kits para compartilhar ou festa
+• Brotinhos (15–18 cm) perfeitos para o dia a dia
+• Pizzas Tradicionais (30–35 cm) para toda a família
+
+Sabores clássicos, especiais e doces + bebidas geladas!
+Peça pelo WhatsApp e garanta o seu pedido. 😋</pre>
+        </div>
+
+        <div class="copy-box">
+          <div class="copy-header">
+            <strong>2. Postagem Curta para Grupos do Facebook &amp; Redes Sociais</strong>
+            <button class="btn" data-copy="msg2" type="button">Copiar</button>
+          </div>
+          <pre class="script-text" id="msg2">Quem ama pizza bem recheada e com massa macia levanta a mão! 🙌🍕
+
+Estamos montando kits de Mini Pizzas, Brotinhos e Pizzas Tradicionais com sabores clássicos, especiais e doces. Ideal para matar a vontade hoje, montar combo com a família ou encomendar caixas/bandejas.
+
+Chama no direct ou no WhatsApp que te mando o cardápio do dia! 📲</pre>
+        </div>
+
+        <div class="copy-box">
+          <div class="copy-header">
+            <strong>3. Oferta de Combo + Upsell (Aumentar o Ticket Médio)</strong>
+            <button class="btn" data-copy="msg3" type="button">Copiar</button>
+          </div>
+          <pre class="script-text" id="msg3">🔥 Combo do dia liberado! Leve sua pizza + bebida gelada e complete o pedido com nosso adicional de Mini Pizza Doce por um valor especial.
+
+Prático, saboroso e pensado para deixar seu pedido ainda mais completo. Garanta já o seu! 🍕🥤🍫</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Pizza que Rende — Pizzas e Mini Pizzas do Zero ao Delivery</strong> • Cursos &amp; Renda Brasil
+  </footer>
+
+  <script>
+    // Navegação entre abas
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const panels = document.querySelectorAll(".panel");
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-tab");
+        tabButtons.forEach((b) => b.classList.remove("active"));
+        panels.forEach((p) => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(target).classList.add("active");
+        window.scrollTo({ top: document.querySelector("nav.tabs-wrap").offsetTop - 4, behavior: "smooth" });
+      });
+    });
+
+    // Checklist interativo com localStorage
+    const checklistItems = [
+      "Testar a temperatura e o tempo de assamento do forno doméstico",
+      "Separar balança digital, rolo/abridor, assadeiras e potes com tampa",
+      "Comprar farinha de trigo, fermento, sal, açúcar e óleo/azeite",
+      "Comprar tomates ou base de molho, temperos e orégano",
+      "Comprar queijos e recheios base (calabresa, frango, presunto, etc.)",
+      "Comprar ingredientes para sabores especiais e pizzas doces",
+      "Separar embalagens para Mini (5–6 cm), Brotinho e Tradicional + bandejas",
+      "Preparar etiquetas com sabor, data de fabricação, validade e modo de aquecer",
+      "Produzir lote inicial de massa e molho e testar as gramaturas",
+      "Publicar o cardápio/combos e fazer as primeiras divulgações"
+    ];
+
+    const STORAGE_KEY = "pizza_que_rende_checklist_v1";
+    let savedChecks = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+
+    const checklistContainer = document.getElementById("checklistContainer");
+    const progressText = document.getElementById("progressText");
+    const progressBar = document.getElementById("progressBar");
+
+    function renderChecklist() {
+      checklistContainer.innerHTML = "";
+      let doneCount = 0;
+
+      checklistItems.forEach((labelText, idx) => {
+        const checked = Boolean(savedChecks[idx]);
+        if (checked) doneCount++;
+
+        const row = document.createElement("label");
+        row.className = "check-item" + (checked ? " done" : "");
+
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = checked;
+        cb.addEventListener("change", () => {
+          savedChecks[idx] = cb.checked;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(savedChecks));
+          renderChecklist();
+        });
+
+        const span = document.createElement("span");
+        span.textContent = labelText;
+
+        row.appendChild(cb);
+        row.appendChild(span);
+        checklistContainer.appendChild(row);
+      });
+
+      const pct = Math.round((doneCount / checklistItems.length) * 100);
+      progressText.textContent = `${doneCount} de ${checklistItems.length} concluídos (${pct}%)`;
+      progressBar.style.width = `${pct}%`;
+    }
+
+    document.getElementById("resetChecklistBtn").addEventListener("click", () => {
+      savedChecks = {};
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(savedChecks));
+      renderChecklist();
+    });
+
+    renderChecklist();
+
+    // 45 Sabores (15 Clássicos, 15 Especiais, 15 Doces)
+    const flavors = [
+      // 15 Clássicos
+      { name: "Mussarela Tradicional", cat: "classica" },
+      { name: "Calabresa Fatiada", cat: "classica" },
+      { name: "Calabresa com Cebola", cat: "classica" },
+      { name: "Frango Desfiado Temperado", cat: "classica" },
+      { name: "Frango com Catupiry/Requeijão", cat: "classica" },
+      { name: "Presunto e Mussarela", cat: "classica" },
+      { name: "Portuguesa", cat: "classica" },
+      { name: "Marguerita", cat: "classica" },
+      { name: "Napolitana", cat: "classica" },
+      { name: "Milho com Requeijão", cat: "classica" },
+      { name: "Palmito Cremoso", cat: "classica" },
+      { name: "Atum com Cebola", cat: "classica" },
+      { name: "Bacon Crocante com Queijo", cat: "classica" },
+      { name: "Quatro Queijos", cat: "classica" },
+      { name: "Bauru", cat: "classica" },
+
+      // 15 Especiais
+      { name: "Frango Barbecue / Defumado", cat: "especial" },
+      { name: "Peperoni com Mussarela", cat: "especial" },
+      { name: "Carne Seca com Requeijão", cat: "especial" },
+      { name: "Carne Seca com Banana-da-Terra", cat: "especial" },
+      { name: "Lombo Canadense com Catupiry", cat: "especial" },
+      { name: "Strogonoff de Frango", cat: "especial" },
+      { name: "Strogonoff de Carne", cat: "especial" },
+      { name: "Brócolis com Alho e Bacon", cat: "especial" },
+      { name: "Escarola com Bacon e Mussarela", cat: "especial" },
+      { name: "Espanhola / Mexicana Picante", cat: "especial" },
+      { name: "Pizza da Casa Especial", cat: "especial" },
+      { name: "Supreme / Paulista", cat: "especial" },
+      { name: "Rúcula com Tomate Seco", cat: "especial" },
+      { name: "Cheddar com Bacon", cat: "especial" },
+      { name: "Cinco Queijos", cat: "especial" },
+
+      // 15 Doces
+      { name: "Brigadeiro Tradicional", cat: "doce" },
+      { name: "Brigadeiro com Granulado", cat: "doce" },
+      { name: "Beijinho de Coco", cat: "doce" },
+      { name: "Prestígio (Chocolate + Coco)", cat: "doce" },
+      { name: "Romeu e Julieta (Goiabada + Queijo)", cat: "doce" },
+      { name: "Banana com Canela e Açúcar", cat: "doce" },
+      { name: "Banana Nevadas / Chocolate Branco", cat: "doce" },
+      { name: "Chocolate ao Leite com Morango", cat: "doce" },
+      { name: "Chocolate Branco com Morango", cat: "doce" },
+      { name: "Leite Ninho Cremoso", cat: "doce" },
+      { name: "Leite Ninho com Chocolate/Nutella", cat: "doce" },
+      { name: "Churros com Doce de Leite", cat: "doce" },
+      { name: "Doce de Leite com Coco", cat: "doce" },
+      { name: "Sensação (Morango + Chocolate)", cat: "doce" },
+      { name: "Confete / M&M's Colorido", cat: "doce" }
+    ];
+
+    let activeCat = "todos";
+    const flavorGrid = document.getElementById("flavorGrid");
+    const flavorSearch = document.getElementById("flavorSearch");
+    const filterPills = document.querySelectorAll(".filter-pill");
+
+    function catLabel(cat) {
+      if (cat === "classica") return "Clássica";
+      if (cat === "especial") return "Especial";
+      return "Doce";
+    }
+
+    function renderFlavors() {
+      const term = flavorSearch.value.trim().toLowerCase();
+      const filtered = flavors.filter((f) => {
+        const matchesCat = activeCat === "todos" || f.cat === activeCat;
+        const matchesTerm = !term || f.name.toLowerCase().includes(term);
+        return matchesCat && matchesTerm;
+      });
+
+      flavorGrid.innerHTML = filtered.length
+        ? filtered
+            .map(
+              (f) => `
+              <div class="flavor-card">
+                <small class="cat-${f.cat}">${catLabel(f.cat)}</small>
+                <div><strong>${f.name}</strong></div>
+              </div>`
+            )
+            .join("")
+        : `<p class="muted">Nenhum sabor encontrado para "${flavorSearch.value}".</p>`;
+    }
+
+    filterPills.forEach((pill) => {
+      pill.addEventListener("click", () => {
+        filterPills.forEach((p) => p.classList.remove("active"));
+        pill.classList.add("active");
+        activeCat = pill.getAttribute("data-cat");
+        renderFlavors();
+      });
+    });
+
+    flavorSearch.addEventListener("input", renderFlavors);
+    renderFlavors();
+
+    // Calculadora de custos, taxas e margem
+    const ids = ["custoIngredientes", "custoEmbalagem", "custoExtra", "precoVenda", "taxaApp", "margemDesejada"];
+    const fmtBRL = (v) => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+    function updateCalc() {
+      const ing = parseFloat(document.getElementById("custoIngredientes").value) || 0;
+      const emb = parseFloat(document.getElementById("custoEmbalagem").value) || 0;
+      const ext = parseFloat(document.getElementById("custoExtra").value) || 0;
+      const venda = parseFloat(document.getElementById("precoVenda").value) || 0;
+      const taxa = Math.min(89, Math.max(0, parseFloat(document.getElementById("taxaApp").value) || 0)) / 100;
+      const margem = Math.min(89, Math.max(0, parseFloat(document.getElementById("margemDesejada").value) || 0)) / 100;
+
+      const custoTotal = ing + emb + ext;
+      const repasseApp = venda * (1 - taxa);
+      const lucroDireto = venda - custoTotal;
+      const lucroApp = repasseApp - custoTotal;
+
+      const precoSugDireto = margem < 1 ? custoTotal / (1 - margem) : custoTotal;
+      const precoSugApp = (1 - taxa - margem) > 0 ? custoTotal / (1 - taxa - margem) : precoSugDireto;
+
+      document.getElementById("resCustoTotal").textContent = fmtBRL(custoTotal);
+      document.getElementById("resLucroDireto").textContent = fmtBRL(lucroDireto);
+      document.getElementById("resLucroApp").textContent = fmtBRL(lucroApp);
+      document.getElementById("resPrecoDireto").textContent = fmtBRL(precoSugDireto);
+      document.getElementById("resPrecoApp").textContent = fmtBRL(precoSugApp);
+
+      const insight = document.getElementById("calcInsight");
+      if (lucroApp < 0) {
+        insight.className = "alert";
+        insight.innerHTML = `<strong>Atenção:</strong> no preço atual de ${fmtBRL(venda)} com ${(taxa * 100).toFixed(0)}% de taxa no app, o repasse (${fmtBRL(repasseApp)}) fica abaixo do seu custo (${fmtBRL(custoTotal)}). Ajuste o preço no app para pelo menos ${fmtBRL(precoSugApp)}.`;
+      } else {
+        insight.className = "alert ok";
+        insight.innerHTML = `<strong>Resumo:</strong> na venda direta você lucra ${fmtBRL(lucroDireto)} por unidade e no app ${fmtBRL(lucroApp)} (repasse de ${fmtBRL(repasseApp)}). Para manter ${(margem * 100).toFixed(0)}% de margem, sugere-se ${fmtBRL(precoSugDireto)} na venda direta e ${fmtBRL(precoSugApp)} no app.`;
+      }
+    }
+
+    ids.forEach((id) => document.getElementById(id).addEventListener("input", updateCalc));
+    updateCalc();
+
+    // Botões de copiar mensagens
+    document.querySelectorAll("[data-copy]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const el = document.getElementById(btn.getAttribute("data-copy"));
+        navigator.clipboard.writeText(el.textContent).then(() => {
+          const original = btn.textContent;
+          btn.textContent = "Copiado!";
+          setTimeout(() => (btn.textContent = original), 1600);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
